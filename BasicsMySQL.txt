@@ -1,1 +1,196 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| arshad             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| register           |
+| sys                |
++--------------------+
+6 rows in set (0.01 sec)
+
+mysql> create database nsti;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| arshad             |
+| information_schema |
+| mysql              |
+| nsti               |
+| performance_schema |
+| register           |
+| sys                |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use nsti;
+Database changed
+mysql> create table adit (studentID int auto_increment primary key, Firstname varchar(100), Lastname varchar(50),Age int(50), GradeLevel varchar(100));
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+
+mysql> desc adit;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| studentID  | int          | NO   | PRI | NULL    | auto_increment |
+| Firstname  | varchar(100) | YES  |     | NULL    |                |
+| Lastname   | varchar(50)  | YES  |     | NULL    |                |
+| Age        | int          | YES  |     | NULL    |                |
+| GradeLevel | varchar(100) | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+mysql>     ----(1)
+
+
+mysql> insert into adit (Firstname, Lastname, Age, GradeLevel) values('Shaik','Arshad',24,'12th'),('Raj','kumar',20,'8th');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0    --->2
+
+mysql> select *from adit where studentID = 1;
++-----------+-----------+----------+------+------------+
+| studentID | Firstname | Lastname | Age  | GradeLevel |
++-----------+-----------+----------+------+------------+
+|         1 | Shaik     | Arshad   |   24 | 12th       |
++-----------+-----------+----------+------+------------+
+1 row in set (0.00 sec)
+
+mysql> select *from adit where GradeLevel = '8th';
++-----------+-----------+----------+------+------------+
+| studentID | Firstname | Lastname | Age  | GradeLevel |
++-----------+-----------+----------+------+------------+
+|         2 | Raj       | kumar    |   20 | 8th        |
++-----------+-----------+----------+------+------------+
+1 row in set (0.00 sec)      ---->3
+
+
+mysql> alter table adit add column city varchar(100);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc adit;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| studentID  | int          | NO   | PRI | NULL    | auto_increment |
+| Firstname  | varchar(100) | YES  |     | NULL    |                |
+| Lastname   | varchar(50)  | YES  |     | NULL    |                |
+| Age        | int          | YES  |     | NULL    |                |
+| GradeLevel | varchar(100) | YES  |     | NULL    |                |
+| city       | varchar(100) | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)    ----> 4
+
+
+mysql> update adit set city='Mancherial' where studentID = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from adit;
++-----------+-----------+----------+------+------------+------------+
+| studentID | Firstname | Lastname | Age  | GradeLevel | city       |
++-----------+-----------+----------+------+------------+------------+
+|         1 | Shaik     | Arshad   |   24 | 12th       | Mancherial |
+|         2 | Raj       | kumar    |   20 | 8th        | NULL       |
++-----------+-----------+----------+------+------------+------------+
+2 rows in set (0.00 sec)   ---> 5
+
+
+mysql> select max(Age) as OldeststudentID from adit;
++-----------------+
+| OldeststudentID |
++-----------------+
+|              24 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select min(Age) as YoungeststudentID from adit;
++-------------------+
+| YoungeststudentID |
++-------------------+
+|                20 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(Age) as AverageAge from adit;
++------------+
+| AverageAge |
++------------+
+|    22.0000 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) as TotalstudentID from adit;
++----------------+
+| TotalstudentID |
++----------------+
+|              2 |
++----------------+
+1 row in set (0.00 sec)   ----> 6
+
+
+mysql> alter table adit add constraint AgeCheck check (Age between 15 and 25);
+Query OK, 2 rows affected (0.05 sec)
+Records: 2  Duplicates: 0  Warnings: 0  ------>7
+
+
+select *from adit where Lastname like 'A%';
++-----------+-----------+----------+------+------------+------------+
+| studentID | Firstname | Lastname | Age  | GradeLevel | city       |
++-----------+-----------+----------+------+------------+------------+
+|         1 | Shaik     | Arshad   |   24 | 12th       | Mancherial |
++-----------+-----------+----------+------+------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select *from adit where Firstname like 'S%';
++-----------+-----------+----------+------+------------+------------+
+| studentID | Firstname | Lastname | Age  | GradeLevel | city       |
++-----------+-----------+----------+------+------------+------------+
+|         1 | Shaik     | Arshad   |   24 | 12th       | Mancherial |
++-----------+-----------+----------+------+------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select *from adit where Firstname like 'R%';
++-----------+-----------+----------+------+------------+------+
+| studentID | Firstname | Lastname | Age  | GradeLevel | city |
++-----------+-----------+----------+------+------------+------+
+|         2 | Raj       | kumar    |   20 | 8th        | NULL |
++-----------+-----------+----------+------+------------+------+
+1 row in set (0.00 sec) 
+select Firstname as GivenName, Lastname as familyName from adit;
++-----------+------------+
+| GivenName | familyName |
++-----------+------------+
+| Shaik     | Arshad     |
+| Raj       | kumar      |
++-----------+------------+
+2 rows in set (0.00 sec)   ---->8
+
+
+
+insert into studentclass(studentID, classID) values(2,2),(3,3);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (nsti.studentclass, CONSTRAINT studentclass_ibfk_1 FOREIGN KEY (studentID) REFERENCES adit (studentID))
+mysql> select *from studentclass;
++-----------+---------+
+| studentID | classID |
++-----------+---------+
+|         1 |       1 |
++-----------+---------+
+1 row in set (0.00 sec)
+
+mysql>
+select adit.Firstname, adit.Lastname, class.classname from adit inner join studentclass on adit
+. studentID=studentclass.studentID inner join class on studentclass.classID=class.classID;
++-----------+----------+-----------+
+| Firstname | Lastname | classname |
++-----------+----------+-----------+
+| Shaik     | Arshad   | Math      |
++-----------+----------+-----------+
+1 row in set (0.00 sec) -----> 9
+
 
