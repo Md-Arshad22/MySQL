@@ -12,6 +12,7 @@ mysql> show databases;
 6 rows in set (0.01 sec)
 
 
+
 mysql> create database nsti;
 Query OK, 1 row affected (0.01 sec)
 
