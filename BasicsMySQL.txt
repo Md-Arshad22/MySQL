@@ -13,7 +13,6 @@ mysql> show databases;
 
 
 
-
 mysql> create database nsti;
 Query OK, 1 row affected (0.01 sec)
 
